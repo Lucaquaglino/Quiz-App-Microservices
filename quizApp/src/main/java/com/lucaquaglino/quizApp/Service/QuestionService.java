@@ -3,6 +3,8 @@ package com.lucaquaglino.quizApp.Service;
 import com.lucaquaglino.quizApp.DAO.QuestionDao;
 import com.lucaquaglino.quizApp.Entity.Question;
 import org.apache.coyote.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +15,7 @@ import java.util.List;
 
 @Service
 public class QuestionService {
-
+    private static final Logger logger = LoggerFactory.getLogger(QuestionService.class);
     @Autowired
     QuestionDao questionDao;
 
@@ -22,13 +24,18 @@ public class QuestionService {
         try {
             return new ResponseEntity<>(questionDao.findAll(), HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Errore durante il recupero di tutte le domande", e);
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
     }
 
-    public List<Question> getQuestionByCategory(String category) {
-        return questionDao.findByCategory(category);
+    public ResponseEntity<List<Question>> getQuestionByCategory(String category) {
+        try {
+            return new ResponseEntity<>(questionDao.findByCategory(category), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Errore durante il recupero delle domande per la categoria: {}", category, e);
+        }
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
     }
 
     public ResponseEntity<String> addQuestion(Question question) {
@@ -36,7 +43,7 @@ public class QuestionService {
             questionDao.save(question);
             return new ResponseEntity<>("success", HttpStatus.CREATED);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Errore durante l'aggiunta della domanda", e);
         }
         return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
     }
