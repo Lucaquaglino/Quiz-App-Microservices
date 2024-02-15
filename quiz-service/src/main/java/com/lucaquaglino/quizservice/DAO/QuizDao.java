@@ -1,4 +1,4 @@
-package com.lucaquaglino.quizApp.DAO;
+package com.lucaquaglino.quizservice.DAO;
 
 import com.lucaquaglino.quizApp.Entity.Quiz;
 import org.springframework.data.jpa.repository.JpaRepository;

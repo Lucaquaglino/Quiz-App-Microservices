@@ -1,4 +1,4 @@
-package com.lucaquaglino.quizApp.Service;
+package com.lucaquaglino.quizservice.Service;
 
 import com.lucaquaglino.quizApp.DAO.QuestionDao;
 import com.lucaquaglino.quizApp.DAO.QuizDao;

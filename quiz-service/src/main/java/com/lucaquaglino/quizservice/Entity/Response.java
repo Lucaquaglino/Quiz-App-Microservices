@@ -1,6 +1,5 @@
-package com.lucaquaglino.quizApp.Entity;
+package com.lucaquaglino.quizservice.Entity;
 
-import jakarta.persistence.Entity;
 import lombok.Data;
 
 @Data

@@ -1,4 +1,4 @@
-package com.lucaquaglino.quizApp.Entity;
+package com.lucaquaglino.quizservice.Entity;
 
 import lombok.Data;
 
