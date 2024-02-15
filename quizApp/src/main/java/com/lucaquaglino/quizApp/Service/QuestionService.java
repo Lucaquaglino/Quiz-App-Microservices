@@ -28,7 +28,7 @@ public class QuestionService {
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
     }
-
+    //RECUPERO LE DOMANDE PER CATEGORIA
     public ResponseEntity<List<Question>> getQuestionByCategory(String category) {
         try {
             return new ResponseEntity<>(questionDao.findByCategory(category), HttpStatus.OK);
@@ -37,7 +37,7 @@ public class QuestionService {
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
     }
-
+    //AGGIUNGO NUOVE DOMANDE
     public ResponseEntity<String> addQuestion(Question question) {
         try {
             questionDao.save(question);
