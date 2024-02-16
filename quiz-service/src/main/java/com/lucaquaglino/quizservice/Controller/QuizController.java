@@ -1,8 +1,9 @@
 package com.lucaquaglino.quizservice.Controller;
 
-import com.lucaquaglino.quizApp.Entity.QuestionWrapper;
-import com.lucaquaglino.quizApp.Entity.Response;
-import com.lucaquaglino.quizApp.Service.QuizService;
+
+import com.lucaquaglino.quizservice.Entity.QuestionWrapper;
+import com.lucaquaglino.quizservice.Entity.QuizDto;
+import com.lucaquaglino.quizservice.Service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,8 +19,8 @@ public class QuizController
 QuizService quizService;
 
 @PostMapping("create")
-    public ResponseEntity<String> createQuiz(@RequestParam String category,@RequestParam  int numQ,@RequestParam  String title){
-        return quizService.createQuiz(category, numQ, title);
+    public ResponseEntity<String> createQuiz(@RequestBody QuizDto quizDto){
+        return quizService.createQuiz(quizDto.getCategoryName(), quizDto.getNumQuestions(), quizDto.getTitle());
     }
 
 

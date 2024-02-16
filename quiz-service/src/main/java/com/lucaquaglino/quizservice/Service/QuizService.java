@@ -1,11 +1,11 @@
 package com.lucaquaglino.quizservice.Service;
 
-import com.lucaquaglino.quizApp.DAO.QuestionDao;
-import com.lucaquaglino.quizApp.DAO.QuizDao;
-import com.lucaquaglino.quizApp.Entity.Question;
-import com.lucaquaglino.quizApp.Entity.QuestionWrapper;
-import com.lucaquaglino.quizApp.Entity.Quiz;
-import com.lucaquaglino.quizApp.Entity.Response;
+
+import com.lucaquaglino.quizservice.DAO.QuizDao;
+import com.lucaquaglino.quizservice.Entity.Question;
+import com.lucaquaglino.quizservice.Entity.QuestionWrapper;
+import com.lucaquaglino.quizservice.Entity.Quiz;
+import com.lucaquaglino.quizservice.Entity.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,15 +20,14 @@ public class QuizService{
 @Autowired
 QuizDao quizDao;
 
-@Autowired
-    QuestionDao questionDao;
+
 
     public ResponseEntity<String> createQuiz(String category, int numQ, String title) {
-        List<Question> questions = questionDao.findRandomQuestionByCategory(category, numQ);
-        Quiz quiz = new Quiz();
+   //   List<Integer> questions = // call the generate url RestTemplate http://localhost:8080/question/generate
+      /*    Quiz quiz = new Quiz();
         quiz.setTitle(title);
         quiz.setQuestions(questions);
-        quizDao.save(quiz);
+        quizDao.save(quiz);*/
 
         return new ResponseEntity<>("success", HttpStatus.CREATED);
 
@@ -36,13 +35,14 @@ QuizDao quizDao;
 
 
     public ResponseEntity<List<QuestionWrapper>> getQuizQuestions(Integer id) {
-         Optional<Quiz> quiz = quizDao.findById(id);
+  /*       Optional<Quiz> quiz = quizDao.findById(id);
          List<Question> questionFromDB = quiz.get().getQuestions();
          List<QuestionWrapper> questionsFromUser = new ArrayList<>();
 for(Question q : questionFromDB){
     QuestionWrapper qw = new QuestionWrapper(q.getId(), q.getQuestionTitle(),q.getOption1(), q.getOption2(), q.getOption3(), q.getOption4());
     questionsFromUser.add(qw);
-}
+}*/
+        List<QuestionWrapper> questionsFromUser = new ArrayList<>();
          return new ResponseEntity<>(questionsFromUser, HttpStatus.OK);
     }
 
