@@ -2,10 +2,11 @@ package com.lucaquaglino.quizservice.Service;
 
 
 import com.lucaquaglino.quizservice.DAO.QuizDao;
-import com.lucaquaglino.quizservice.Entity.Question;
+
 import com.lucaquaglino.quizservice.Entity.QuestionWrapper;
 import com.lucaquaglino.quizservice.Entity.Quiz;
 import com.lucaquaglino.quizservice.Entity.Response;
+import com.lucaquaglino.quizservice.feign.QuizInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,15 +20,15 @@ import java.util.Optional;
 public class QuizService{
 @Autowired
 QuizDao quizDao;
-
-
+@Autowired
+QuizInterface quizInterface;
 
     public ResponseEntity<String> createQuiz(String category, int numQ, String title) {
-   //   List<Integer> questions = // call the generate url RestTemplate http://localhost:8080/question/generate
-      /*    Quiz quiz = new Quiz();
-        quiz.setTitle(title);
-        quiz.setQuestions(questions);
-        quizDao.save(quiz);*/
+ List<Integer> questions = quizInterface.getQuestionsFromQuiz(category, numQ).getBody();
+ Quiz quiz = new Quiz();
+ quiz.setQuestionIds(questions);
+ quiz.setTitle(title);
+ quizDao.save(quiz);
 
         return new ResponseEntity<>("success", HttpStatus.CREATED);
 
@@ -47,7 +48,7 @@ for(Question q : questionFromDB){
     }
 
 
-    public ResponseEntity<Integer> calculateResult(Integer id, List<Response> responses) {
+ /*   public ResponseEntity<Integer> calculateResult(Integer id, List<Response> responses) {
         Quiz quiz = quizDao.findById(id).get();
         List<Question> questions =quiz.getQuestions();
         int right= 0;
@@ -60,5 +61,5 @@ for(Question q : questionFromDB){
             }
 
         return new ResponseEntity<>(right, HttpStatus.OK);
-    }
+    }*/
 }
