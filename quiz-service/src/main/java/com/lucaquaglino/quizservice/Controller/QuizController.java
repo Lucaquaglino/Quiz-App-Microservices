@@ -3,6 +3,7 @@ package com.lucaquaglino.quizservice.Controller;
 
 import com.lucaquaglino.quizservice.Entity.QuestionWrapper;
 import com.lucaquaglino.quizservice.Entity.QuizDto;
+import com.lucaquaglino.quizservice.Entity.Response;
 import com.lucaquaglino.quizservice.Service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +31,9 @@ QuizService quizService;
 
     }
 
-/*    @PostMapping("submit/{id}")
-    public ResponseEntity<Integer> submitQuiz(@PathVariable Integer id, @RequestBody List<Response> responses){
-    return quizService.calculateResult(id, responses);
-    }*/
+
+  @PostMapping("submit/{id}")
+    public ResponseEntity<Integer> submitQuiz(@PathVariable Integer id, @RequestBody List<Response> responses) {
+      return quizService.calculateResult(id, responses);
+  }
 }
