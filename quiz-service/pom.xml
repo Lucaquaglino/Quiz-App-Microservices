@@ -64,11 +64,16 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>quiz-service</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+				<!--	<image>
+						<name>lucaq7/quizProject-${project.artifactId}:s{project.version}</name>
+					</image>
+					<pullPolicy>IF_NOT_PRESENT</pullPolicy>-->
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
