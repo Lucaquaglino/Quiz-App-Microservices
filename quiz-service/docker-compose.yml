@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  quiz-service:
+    image: lucaq7/quiz-service
+    ports:
+      - "8090:8090"
+    networks:
+      - microservices_network
+    depends_on:
+      - service-registry
+    environment:
+      - DATABASE_URL=postgres://postgres:Marni2019@localhost:5432/quizDB
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-registry:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://quiz-postgres:5432/quizDB
+
+
+  question-service:
+    image: lucaq7/question-service
+    ports:
+      - "8080:8080"
+    networks:
+      - microservices_network
+    depends_on:
+      - service-registry
+    environment:
+      - DATABASE_URL=postgres://postgres:Marni2019@localhost:5432/questionDB
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-registry:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://question-postgres:5432/questionDB
+
+  service-registry:
+    image: lucaq7/service-registry
+    ports:
+      - "8761:8761"
+    networks:
+      - microservices_network
+
+  api-gateway:
+    image: lucaq7/api-gateway
+    ports:
+      - "8765:8765"
+    networks:
+      - microservices_network
+    depends_on:
+      - service-registry
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-registry:8761/eureka/
+
+  quiz-postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: quizDB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Marni2019
+    ports:
+      - 5433:5432
+    networks:
+      - microservices_network
+    container_name: quiz-postgres
+
+  question-postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: questionDB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Marni2019
+    ports:
+        - 5434:5432
+    networks:
+      - microservices_network
+    container_name: question-postgres
+networks:
+  microservices_network:
+    driver: bridge
